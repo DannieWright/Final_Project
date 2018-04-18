@@ -78,3 +78,78 @@ What is the numerical technique to solve it?
 How will you make it "yours" if it is a canned problem from Newman. 
   I do not know. I will likely look more into deterministic chaos.
  
+
+
+
+
+
+
+
+
+# 4/18/2018 Work
+
+1) Identify general area  
+?? What?? For a square Area = length * width.  
+I am going to be working on Newman exercise 8.3, about the Lorenz Equations.   
+I will likely also work on a nonlinear driven pendulum as a intro to deterministic chaos.
+
+2) Write down relevant controlling equations  
+$\frac{dx}{dt}=\sigma(y-x), \ \frac{dy}{dt}=rx-y-xz, \ \frac{dz}{dt}=xy-bz$
+
+and
+
+$\frac{d^2\theta}{dt^2}=-\frac{g}{l}\sin(\theta)-q\frac{d\theta}{dt}+F_d\sin(\Omega_Dt)$
+
+3) Clarify specific scenario to be simulated
+Simulating a greatly simplified convection problem. Going to show case of $\sigma=10$, 
+$r=28$, $b=\frac{8}{3}$, $t_0=0$, and $t_f=50$, with initial conditions of (x, y, z) = (0, 1, 0). 
+I will plot y versus time and z versus x. I would like to also set up animation to show the evolution
+of z versus x over time.
+
+Simulating a nonlinear driven pendulum. Going to show similar start consitions where the angle difference
+between the two situations are modeled versus time to demonstrate deterministic properties with a low drive. 
+Also show high drive force to show sensitivity to initial conditions.
+
+4) Write down the numerical method you intend to use  
+Fourth order Runge-Kutta method.
+
+5) Write down boundary conditions for that scenario  
+$r\approx24.74$ determines difference of single to double attractors.
+
+6) Outline specific results to be obtained  
+ describe the situation you are going to simulate  
+ describe the output you expect to generate  
+ Describe how you can verify that your results are correct or reasonable  
+ 
+Lorenz  
+Graphs of y versus time and z versus x. An animation to show the evolution of z versus x over time.
+Should see different number of attractors based on $r$-value for z versus x varying $r$-values. Should see
+butterfly effect for z versus x. Should see oscillatory function for y versus time.
+Can verify solutions with Giordano or find other sources on it, it is apparently a fairly common problem.
+
+Pendulum   
+Graph $\Delta\theta$ versus time for high and low drive values. Possibly show animation of pendulum 
+evolving over time. 
+Should see exponential decrease and increases in the difference between the angles 
+for a low and high driving force respectivly. Animation should show two oscilatory motions that begin to
+vary greatly overtime for high force and stay very similiar for small force.
+I can verify using Giordano.
+
+
+
+
+7) Create a rough outline of major steps you have to take and a schedule for accomplishing them.
+Have most of non-animation code done by 4/23/2018.
+Have most of physics explanation and finish non-animation code by 4/27/2018.
+Finish all code and explanation by 4/30/2018.
+Work on and finish presentation parts, maybe adding to animations or looking at less simplified case for Lorenz
+problem by final presentation.
+
+Write down everything you can prior to class (i.e. 9:15 am). Ideally you will have A LOT of 
+questions and ask them in class. There is nothing like scientific writing to clarify your 
+
+What was the first question asking?
+Not entirely sure about boundary conditions for these cases, figured I would model mostly variation in initial
+conditions for the pendulum to see chaotic aspect, and would adjust $r$-value for the Lorenz, is this a good way to 
+go about it?
+questions! You will finish this outline for your Benchmark due Friday.
