@@ -3,12 +3,14 @@
 
 # In[1]:
 
+
 import numpy as np
 
 
-# In[10]:
+# In[62]:
 
-def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1):
+
+def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1, bVerbose=False):
     """
     Description: returns the Runge-Kutta solution to the given vector
     
@@ -42,19 +44,19 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1):
     
     #solve each case
     for i in range (1, numSteps + 1):
-        
+
         #first order Runge-Kutta (Euler method)
         if 1 == order:
             r += h * func (r, t, *args)
             
         #second order Runge-Kutta
-        if 2 == order:
+        elif 2 == order:
             k1 = h * func (r, t, *args)
             k2 = h * func (r + 0.5 * k1, t + 0.5 * h, *args)
             r += k2
             
         #fourth order Runge-Kutta
-        if 4 == order:
+        elif 4 == order:
             k1 = h * func (r, t, *args)
             k2 = h * func (r + 0.5 * k1, t + 0.5 * h, *args)
             k3 = h * func (r + 0.5 * k2, t + 0.5 * h, *args)
@@ -64,14 +66,12 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1):
         #increment time
         t += h
         
+        if bVerbose:
+            print ("step: {}, t: {}, r: {}".format (i, t, r))
+        
         #add new solution values
         solution[i,0] = t
         solution[i,1:] = r
     
     return solution
-
-
-# In[ ]:
-
-
 
