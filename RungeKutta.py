@@ -32,35 +32,28 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
     Returned: (t, r_1, ..., r_dimension), as (numSteps + 1)x(dimension + 1) 
                 numpy array.
     """
-
-    #set overall interval values
-    a0, b0 = interval
-
-    #initialize results as zero
-    solution = np.zeros ((numSteps * breaks + 1, dimension + 1))
+    #set interval and step size
+    a, b = interval
+    h = (b - a) / numSteps
+    
+    #set final solution to None for first calculation
+    solutionF = None
     
     for j in range (breaks):
-    
+        #initialize results as zero
+        solution = np.zeros ((numSteps + 1, dimension + 1))
+       
         #if calculating first break, use given starting state
         if 0 == j:
             r = r0
         #else use previous break's ending value for starting state
         else:
-            r = (solution[endBreak,1], solution[endBreak,2], solution[endBreak,3])
+            r = (solution[-1,1], solution[-1,2], solution[-1,3])
 
-        #set interval and step size for current break
-        a = b0 / breaks * j + a0
-        b = b0 / breaks * (j + 1)
-        h = (b - a) / numSteps
-
-        #set solution array index value for end/beginning of current break
-        endBreak = numSteps * (j + 1) - 1
-        begBreak = numSteps * j
-        
         #solve first case for break
         t = a
-        solution[begBreak,0] = t
-        solution[begBreak,1:] = r
+        solution[0,0] = t
+        solution[0,1:] = r
 
         #solve each case
         for i in range (1, numSteps + 1):
@@ -90,8 +83,14 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
                 print ("step: {}, t: {}, r: {}".format (i, t, r))
 
             #add new solution values
-            solution[i + begBreak,0] = t
-            solution[i + begBreak,1:] = r
+            solution[i,0] = t
+            solution[i,1:] = r
+            
+        #add last break's solution to overall solution
+        if None != solutionF:
+            np.concatenate ((solutionF, solution), axis = dimension + 1)
+        else:
+            solutionF = solution
     
-    return solution
+    return solutionF
 
