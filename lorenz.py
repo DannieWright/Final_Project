@@ -39,7 +39,7 @@ def lorenz (r, t, state):
     return np.array ([fx, fy, fz], float)
 
 
-def lorenzSolution (r0, interval, steps, state):
+def lorenzSolution (r0, interval, steps, state, breaks = 1):
     """
     Description:returns the solution to the differential equations 
                 that describe the Lorenz equations using Runge-Kutta's
@@ -49,6 +49,8 @@ def lorenzSolution (r0, interval, steps, state):
                     all floats
                interval - touple (t1, t2), both are floats
                steps - float, number of steps for Runge-Kutta method
+               breaks - number of times to break up interval Runge-Kutta
+                       calculation. MUST be >= 1, int
     
     Returned:m x 4 numpy array, [time, x, y, z]
     
@@ -75,9 +77,10 @@ def lorenzSolution (r0, interval, steps, state):
            [  1.        ,  -9.18413095,  -8.04678495,  29.33471295]])
     """
     numIndepVars = 3
-    return rk (lorenz, numIndepVars, r0, interval, steps, state, order = 4)
+    return rk (lorenz, numIndepVars, r0, interval, steps, state, order = 4, breaks = breaks)
 
-def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, startPlot = 1, titles = None, bCrit = False):
+def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, startPlot = 1,
+                titles = None, bCrit = False, breaks = 1, plotInterval = None):
     """
     Description: plots x, y, and z versus time, and z versus x for solution
                  to the lorenz equations. MUST call plot() to display
@@ -98,7 +101,10 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
                         in bPlots. Does support LaTeX, string
                 bCrit - add lines to time-dependant functions that show
                         critical point values
-    
+                breaks - number of times to break up interval Runge-Kutta
+                        calculation. MUST be >= 1, int
+                plotInterval - tuple of interval to plot. MUST be subset
+                        of interval, floats
     Returned: none
     
     Usage:
@@ -149,21 +155,32 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
     #set number of subplot rows and columns
     if None != plotDim:
         rows, cols = plotDim
-    #by allows only two columns per row by default w/ 1 < numPlots
+    #allows only two columns per row by default w/ 1 < numPlots
     elif 1 < numPlots:
         rows = int (numPlots / 2) 
         cols = int (numPlots - rows)
     else:
         rows = cols = 1   
         
+    #establishes index values of interval to plot
+    #if specified, calculate indices of solution to plot
+    if None != plotInterval:
+        a, b = interval
+        ap, bp = plotInterval
+        stepPerIndex = steps * breaks / (b - a)
+        ai = int (ap * stepPerIndex)
+        bi = int (bp * stepPerIndex)
+    #by default plot all values of the solution
+    else:
+        ai, bi = (0, -1)
         
     #solve Lorenz equations
-    solution = lorenzSolution (r0, interval, steps, state)
+    solution = lorenzSolution (r0, interval, steps, state, breaks = breaks)
     
     #establish critical points
     if bCrit:
         sigma, rho, beta = state
-        tVals = [solution[0,0], solution[-1,0]]
+        tVals = [solution[ai,0], solution[bi,0]]
         xCrit, yCrit, zCrit = lorenzCriticalPoints (rho, beta)
         
         xVals = np.array ([xCrit, xCrit], float)
@@ -182,7 +199,7 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
             
         ax.text (plotLabelXPos, plotLabelYPos, "({})".format (count), fontsize=plotLabelFontSize, 
                  transform=ax.transAxes)
-        plt.plot (solution[:,0], solution[:,1], "-k")
+        plt.plot (solution[ai:bi,0], solution[ai:bi,1], "-k")
         
         #graph critical points
         if bCrit:
@@ -203,7 +220,7 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
             
         ax.text (plotLabelXPos, plotLabelYPos, "({})".format (count), fontsize=plotLabelFontSize, 
                  transform=ax.transAxes)
-        plt.plot (solution[:,0], solution[:,2], "-k")
+        plt.plot (solution[ai:bi,0], solution[ai:bi,2], "-k")
         
         #graph critical points
         if bCrit:
@@ -224,7 +241,7 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
 
         ax.text (plotLabelXPos, plotLabelYPos, "({})".format (count), fontsize=plotLabelFontSize, 
                  transform=ax.transAxes)
-        plt.plot (solution[:,0], solution[:,3], "-k")
+        plt.plot (solution[ai:bi,0], solution[ai:bi,3], "-k")
         
         #graph critical points
         if bCrit:
@@ -243,7 +260,7 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
             ax.set_title ("Lorenz Equations Z versus X")
         ax.text (plotLabelXPos, plotLabelYPos, "({})".format (count), fontsize=plotLabelFontSize, 
                  transform=ax.transAxes)
-        plt.plot (solution[:,1], solution[:,3], "-k")
+        plt.plot (solution[ai:bi,1], solution[ai:bi,3], "-k")
      
         count += 1
 
