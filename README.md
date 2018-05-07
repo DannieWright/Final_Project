@@ -68,6 +68,8 @@ array([[  0.00000000e+00,   1.00000000e+00,   4.00000000e+00],
        [  9.99990000e-01,   3.68459229e+03,   8.49212855e+01],
        [  1.00000000e+00,   3.68772330e+03,   8.49581468e+01]])
 
+[Presentation](https://drive.google.com/open?id=1IMgNnLmswsDnQJt_CLs0p3njH_Yr4FvHy-orAj_HOgA)
+
 
 Written by Dannie Wright, wri94711@pacificu.edu
 
