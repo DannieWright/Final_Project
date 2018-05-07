@@ -1,13 +1,13 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[5]:
 
 
 import numpy as np
 
 
-# In[62]:
+# In[22]:
 
 
 def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1, 
@@ -37,7 +37,7 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
     h = (b - a) / numSteps
     
     #set final solution to None for first calculation
-    solutionF = None
+    solutionF = np.array([])
     
     for j in range (breaks):
         #initialize results as zero
@@ -48,7 +48,7 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
             r = r0
         #else use previous break's ending value for starting state
         else:
-            r = (solution[-1,1], solution[-1,2], solution[-1,3])
+            r = solution[-1,1:]
 
         #solve first case for break
         t = a
@@ -80,15 +80,16 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
             t += h
 
             if bVerbose:
-                print ("step: {}, t: {}, r: {}".format (i, t, r))
+                print ("step: {}, t: {}, r: {}, r.shape: {}".format (i, t, r, r.shape))
 
             #add new solution values
             solution[i,0] = t
             solution[i,1:] = r
             
         #add last break's solution to overall solution
-        if None != solutionF:
-            np.concatenate ((solutionF, solution), axis = dimension + 1)
+        if 0 != solutionF.size:
+            print ("solF: {}, sol: {}".format (solutionF[0,:], solution[0,:]))
+            np.concatenate ((solutionF, solution), axis = 0)
         else:
             solutionF = solution
     
