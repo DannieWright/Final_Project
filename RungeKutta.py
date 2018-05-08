@@ -1,13 +1,13 @@
 
 # coding: utf-8
 
-# In[5]:
+# In[1]:
 
 
 import numpy as np
 
 
-# In[22]:
+# In[2]:
 
 
 def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1, 
@@ -88,8 +88,7 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
             
         #add last break's solution to overall solution
         if 0 != solutionF.size:
-            print ("solF: {}, sol: {}".format (solutionF[0,:], solution[0,:]))
-            np.concatenate ((solutionF, solution), axis = 0)
+            np.concatenate ((solutionF, solution))
         else:
             solutionF = solution
     
