@@ -105,26 +105,39 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
                         calculation. MUST be >= 1, int
                 plotInterval - tuple of interval to plot. MUST be subset
                         of interval, floats
-    Returned: none
+                        
+    Returned: m x 4 numpy array, [time, x, y, z]
     
     Usage:
-    #set plot size
-    plt.figure(figsize=(16, 16))
-    
-    #set constants and starting condition
-    sigma = 10.0
-    rho = 28.0
-    beta = 8.0 / 3.0
-    state = (sigma, rho, beta)
-    r0 = (0.0, 1.0, 0.0)
-    
-    #set solution interval and accuracy
-    interval = (0.0, 50.0)
-    steps = 1000000
-    
-    #plot Lorenz solution
-    lorenzPlot (r0, state, interval, steps)
-    plt.show ()
+    >>> #set plot size
+    >>> plt.figure(figsize=(16, 16))
+    >>> 
+    >>> #set constants and starting condition
+    >>> sigma = 10.0
+    >>> rho = 28.0
+    >>> beta = 8.0 / 3.0
+    >>> state = (sigma, rho, beta)
+    >>> r0 = (0.0, 1.0, 0.0)
+    >>> 
+    >>> #set solution interval and accuracy
+    >>> interval = (0.0, 50.0)
+    >>> steps = 1000000
+    >>> 
+    >>> #plot Lorenz solution
+    >>> solution = lorenzPlot (r0, state, interval, steps)
+    >>> solution
+    array([[  0.        ,   0.        ,   1.        ,   0.        ],
+           [  0.1       ,   0.79861927,   2.21410102,   0.05958108],
+           [  0.2       ,   2.95275817,   6.62577401,   0.76031252],
+           [  0.3       ,   9.31067541,  19.11133766,   7.50573648],
+           [  0.4       ,  19.16625002,  22.11863919,  38.98453169],
+           [  0.5       ,  10.07950841,  -7.48347292,  39.04833824],
+           [  0.6       ,  -2.316505  ,  -9.14448955,  27.83851748],
+           [  0.7       ,  -6.44260654,  -9.41513193,  25.25733091],
+           [  0.8       ,  -8.62327961, -10.39493442,  26.11467541],
+           [  0.9       ,  -9.67790294, -10.00294941,  28.45195757],
+           [  1.        ,  -9.18413095,  -8.04678495,  29.33471295]])
+    >>> plt.show ()
     """
 
     #establish initial plot values
@@ -263,6 +276,8 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
         plt.plot (solution[ai:bi,1], solution[ai:bi,3], "-k")
      
         count += 1
+    
+    return solution
 
 def lorenzCriticalPoints (rho, beta):
     """
