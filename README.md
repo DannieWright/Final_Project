@@ -3,7 +3,7 @@
 This code numerically models the Lorenz equations and a damped driven nonlinear pendulum using the Runge-Kutta methods. The Runge-Kutta method solves an arbitrary number of differential equations and is found in the RungeKutta.py file.
 
 
-#####needed packages:
+##### needed packages:  
 [RungeKutta](./RungeKutta.py)  
 [Numpy](http://www.numpy.org/)  
 [Pylab](https://matplotlib.org/index.html)  
