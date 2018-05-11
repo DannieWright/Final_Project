@@ -4,11 +4,11 @@ This code numerically models the Lorenz equations and a damped driven nonlinear 
 
 
 #####needed packages:
-[RungeKutta](./RungeKutta.py)
-[Numpy](http://www.numpy.org/)
-[Pylab](https://matplotlib.org/index.html)
-[Jupyter](https://jupyter.org/)
-[Anaconda](https://anaconda.org/)
+[RungeKutta](./RungeKutta.py)  
+[Numpy](http://www.numpy.org/)  
+[Pylab](https://matplotlib.org/index.html)  
+[Jupyter](https://jupyter.org/)  
+[Anaconda](https://anaconda.org/)  
 
 
 [Presentation](https://drive.google.com/open?id=1IMgNnLmswsDnQJt_CLs0p3njH_Yr4FvHy-orAj_HOgA)
