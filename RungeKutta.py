@@ -34,7 +34,12 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
     """
     #set interval and step size
     a, b = interval
-    h = (b - a) / numSteps
+    h = (b - a) / (numSteps * breaks)
+    
+    #one first break store initial value, subsequent breaks already have their 
+    #initial values so do not store them
+    bFirst = True
+    index = 1
     
     #set final solution to None for first calculation
     solutionF = np.array([])
@@ -42,21 +47,20 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
     for j in range (breaks):
         #initialize results as zero
         solution = np.zeros ((numSteps + 1, dimension + 1))
-       
-        #if calculating first break, use given starting state
+        
+        #if calculating first break, use given starting state and interval start
         if 0 == j:
+            t = a
             r = r0
-        #else use previous break's ending value for starting state
-        else:
-            r = solution[-1,1:]
-
-        #solve first case for break
-        t = a
-        solution[0,0] = t
-        solution[0,1:] = r
+        #else use previous break's ending value for starting state and new interval start
+            
+        #if it is the first break, solve first case for break
+        if bFirst:
+            solution[0,0] = t
+            solution[0,1:] = r
 
         #solve each case
-        for i in range (1, numSteps + 1):
+        for i in range (index, numSteps + 1):
 
             #first order Runge-Kutta (Euler method)
             if 1 == order:
@@ -88,9 +92,11 @@ def vectorRungeKutta (func, dimension, r0, interval, numSteps, *args, order=1,
             
         #add last break's solution to overall solution
         if 0 != solutionF.size:
-            np.concatenate ((solutionF, solution))
+            solutionF = np.concatenate ((solutionF, solution))
         else:
             solutionF = solution
-    
+            bFirst = False
+            index = 0
+            
     return solutionF
 

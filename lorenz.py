@@ -140,6 +140,10 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
     >>> plt.show ()
     """
 
+    #critical point colours
+    critPos = "--b"
+    critNeg = "--g"
+    
     #establish initial plot values
     plotLabelXPos = 0.075
     plotLabelYPos = 0.95
@@ -183,6 +187,7 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
         stepPerIndex = steps * breaks / (b - a)
         ai = int (ap * stepPerIndex)
         bi = int (bp * stepPerIndex)
+
     #by default plot all values of the solution
     else:
         ai, bi = (0, -1)
@@ -216,8 +221,8 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
         
         #graph critical points
         if bCrit:
-            plt.plot (tVals, xVals, "--b")
-            plt.plot (tVals, -1 * xVals, "--y")
+            plt.plot (tVals, xVals, critPos)
+            plt.plot (tVals, -1 * xVals, critNeg)
         
         count += 1
     
@@ -237,8 +242,8 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
         
         #graph critical points
         if bCrit:
-            plt.plot (tVals, yVals, "--b")
-            plt.plot (tVals, -1 * yVals, "--y")
+            plt.plot (tVals, yVals, critPos)
+            plt.plot (tVals, -1 * yVals, critNeg)
         
         count += 1
     
@@ -258,7 +263,7 @@ def lorenzPlot (r0, state, interval, steps, bPlots = None, plotDim = None, start
         
         #graph critical points
         if bCrit:
-            plt.plot (tVals, zVals, "--b")
+            plt.plot (tVals, zVals, critPos)
         
         count += 1
     
